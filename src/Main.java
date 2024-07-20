@@ -1,21 +1,36 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.time.LocalDate;
+
 public class Main {
     public static void main(String[] args) {
+
         //Ex1
         System.out.println("Задача 1");
 
         int year = 2021;
         checkingLeapYear(year);
+        System.out.println();
 
         //Ex2
         System.out.println("Задача 2");
 
-        boolean clientOS = true;
-        int clienDeviceYear = 2015;
+        int clientOS = 1;
+        int clientDeviceYear = 2023;
+        selectOS(clientOS, clientDeviceYear);
+        System.out.println();
 
-        choosingOS(clientOS, clienDeviceYear);
+        //Ex3
+        System.out.println("Задача 3");
 
+        int deliveryDistance = 105;
+        int limitDays = 3;
+
+        int days = deliveryTime(deliveryDistance);
+        if (days <= limitDays) {
+            System.out.println("Потребуется дней: " + days);
+        } else {
+            System.out.println("Свыше 100 км доставки нет");
+        }
+        System.out.println();
     }
 
     public static void checkingLeapYear(int year) {
@@ -26,17 +41,23 @@ public class Main {
         }
     }
 
-    public static void choosingOS(boolean clientOS, int clienDeviceYear){
-        int targetYear = 2015;
-        if (clientOS && targetYear > clienDeviceYear) {
-            System.out.println("Установите облегченную версию приложения для для Android по ссылке");
-        } else if (clientOS && targetYear <= clienDeviceYear) {
-            System.out.println("Установите версию приложения для Android по ссылке");
-        } else if (!clientOS && targetYear > clienDeviceYear) {
-            System.out.println("Установите облегченную версию приложения для iOS по ссылке");
-        } else {
-            System.out.println("Установите версию приложения для iOS по ссылке");
-        }
+    public static void selectOS(int clientOS, int clientDeviceYear) {
+        int currentYear = LocalDate.now().getYear();
+        String os = clientOS == 0 ? "iOS" : "Android";
+        String isLite = clientDeviceYear < currentYear ? "облегченную " : "";
+
+        System.out.println("Установите " + isLite + "версию приложения для " + os + " по ссылке");
     }
 
+    public static int deliveryTime(int distance) {
+        int days = 0;
+        int[] distanceBoundaries = {0, 20, 60, 100};
+
+        for (int i : distanceBoundaries) {
+            if (distance > i) {
+                days++;
+            }
+        }
+        return days;
+    }
 }
